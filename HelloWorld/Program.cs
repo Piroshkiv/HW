@@ -1,6 +1,5 @@
 ﻿namespace HW_2_1;
 
-using HelloWorld;
 using System.Collections.Generic;
 using System.Runtime.ExceptionServices;
 using System.Text;
@@ -22,5 +21,6 @@ internal class Program
             Logger.getLogger().Output(writer);
             writer.Close();
         }
+        Console.ReadLine();
     }
 }
