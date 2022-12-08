@@ -13,12 +13,12 @@ internal class Program
     {
         Starter.Run();
         
-        Logger.getLogger().LogLevel = LogStatus.Info;
-        Logger.getLogger().Output();
+        Logger.GetLogger().LogLevel = LogStatus.Info;
+        Logger.GetLogger().Output();
 
         using(StreamWriter writer = new StreamWriter("logs.txt"))
         {
-            Logger.getLogger().Output(writer);
+            Logger.GetLogger().Output(writer);
             writer.Close();
         }
         Console.ReadLine();

@@ -30,6 +30,6 @@ internal static class Starter
     {
         int n = 15;
         for (int i = 0; i < n; i++)
-            Logger.getLogger().AddLog(getRandomLog());
+            Logger.GetLogger().AddLog(getRandomLog());
     }
 }

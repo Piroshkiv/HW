@@ -14,7 +14,7 @@ internal class Logger
 
     public List<Result> LogList { get; private set; }
 
-    public static Logger getLogger()
+    public static Logger GetLogger()
     {
         if (_logger == null)
         {
