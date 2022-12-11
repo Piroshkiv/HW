@@ -22,6 +22,7 @@ namespace HW_2_2
             };
         }
         public List<(Product, int)> Products { get; init; }
+        private int _orderNumber = 0;
 
         public void Add((Product, int) addItem)
         {
@@ -70,7 +71,7 @@ namespace HW_2_2
 
         public void Confirm(User user)
         {
-            string message = "Your goods:\n";
+            string message = $"Your order id: {++_orderNumber}\n";
             user.Cart.Products.ForEach(el =>
                 message += Product.ToString(el) + '\n'
             );
