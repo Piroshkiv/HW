@@ -23,9 +23,7 @@ namespace HW_2_2
         public override string ToString()
         {
             return $"Id: {ID} Name: {Name} Price: {Price}";
+            
         }
-
-        
-
     }
 }

@@ -24,8 +24,6 @@
             store.Confirm(user);
             WriteSplit();
 
-
-
         }
     }
 }

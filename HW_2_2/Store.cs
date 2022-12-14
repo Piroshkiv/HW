@@ -68,7 +68,7 @@ namespace HW_2_2
             Products.ForEach(el =>
                 Console.WriteLine(Product.ToString(el)));
         }
-
+        
         public void Confirm(User user)
         {
             string message = $"Your order id: {++_orderNumber}\n";

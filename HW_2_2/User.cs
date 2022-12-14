@@ -27,7 +27,5 @@ namespace HW_2_2
             }
             while (true);
         }
-       
-       
     }
 }
