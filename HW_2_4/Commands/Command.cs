@@ -1,17 +1,60 @@
-﻿using System;
+﻿using HW_2_4.Commands.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PW_2_2.Commands
+namespace HW_2_4.Commands
 {
     internal abstract class Command
     {
-        public Command(List<ToDoItem> toDoItems) => ToDoItems = toDoItems;
+        public Command(IList<ToDoItem> toDoItems) => ToDoItems = toDoItems;
 
-        protected List<ToDoItem> ToDoItems { get; init; }
+        protected IList<ToDoItem> ToDoItems { get; private init;}
         public string Name { get; init; }
-        public abstract void Execute(string args);
+        public int RequiredNumber { get; init; }
+        public virtual void Execute(IList<string> args)
+        {
+            CheckArgumentNumbers(args.Count);
+        }
+        
+        public void CheckArgumentNumbers(int existingNumber)
+        {
+            if (existingNumber < RequiredNumber)
+                throw new NotEnoughtParametersException()
+                {
+                    CommandName = Name,
+                    ExistingNumber = existingNumber,
+                    RequiredNumber = RequiredNumber
+                };
+        }
+
+        public static IList<string> ParseArgs(string stringCommand)
+        {
+            string[] command = stringCommand.Split('"');
+
+            List<string> arguments = new List<string>();
+
+            for (int i = 0; i < command.Length; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    foreach (string arg in command[i].Split(' '))
+                    {
+                        if (!string.IsNullOrWhiteSpace(arg))
+                            arguments.Add(arg.Trim());
+                    }
+                }
+                else
+                {
+                    arguments.Add(command[i]);
+                }
+            }
+
+            return arguments;
+
+        }
+
     }
 }

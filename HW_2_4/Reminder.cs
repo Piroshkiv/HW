@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PW_2_2
+namespace HW_2_4
 {
     internal class Reminder : ToDoItem
     {

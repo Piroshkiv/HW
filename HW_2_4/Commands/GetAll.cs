@@ -4,15 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PW_2_2.Commands
+namespace HW_2_4.Commands
 {
     internal class GetAll:Command
     {
-        public GetAll(List<ToDoItem> toDoItems) : base(toDoItems) =>
-            Name = "get-all";
+        public GetAll(IList<ToDoItem> toDoItems) : base(toDoItems) =>
+             (Name, RequiredNumber) = ("get-all", 0);
 
-        public override void Execute(string args)
+        public override void Execute(IList<string> args)
         {
+            base.Execute(args);
+
             ToDoItems.OrderBy(el => el.ID).ToList().ForEach(el => Console.WriteLine(el));
         }
     }
