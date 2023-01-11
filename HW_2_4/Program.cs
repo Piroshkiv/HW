@@ -1,7 +1,8 @@
-﻿using PW_2_2.Commands;
-using System.Windows.Input;
+﻿using HW_2_4.Commands;
+using HW_2_4.Commands.Exceptions;
+using HW_2_5;
 
-namespace PW_2_2
+namespace HW_2_4
 {
     internal class Program
     {
@@ -18,24 +19,33 @@ namespace PW_2_2
                 new GetAll(toDoList),
                 new Update(toDoList)
             };
+            commands.Add(new Help(toDoList, commands));
+
+            Loger loger = new ConsoleLogger();
 
             string stringCommand;
             while ((stringCommand = Console.ReadLine()) != "exit")
             {
-                string commandName = stringCommand.Split(' ')[0];
-                string commandArgs = stringCommand.Substring(commandName.Length);
+
+                var commandArgs = Command.ParseArgs(stringCommand) ;
+                string commandName = commandArgs[0];
+
+                commandArgs.RemoveAt(0);
                 try
                 {
                     Command command = commands.Find(el => el.Name == commandName);
                     if (command is null)
-                        throw new Exception();
-                    command.Execute(commandArgs.Trim());
+                        throw new NoCommandException()
+                        {
+                            CommandName = commandName
+                        };
+                    command.Execute(commandArgs);
+                    loger.Log(new LoggerConfig(LogType.Info, "command completed successfully"));
                 }
-                catch
+                catch(CommandException ex)
                 {
-                    Console.WriteLine("check the spelling of commands");
+                    loger.Log(new LoggerConfig( LogType.Error, ex.Message));
                 }
-
             }
         }
     }

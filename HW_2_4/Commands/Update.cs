@@ -1,47 +1,70 @@
-﻿using System;
+﻿using HW_2_4;
+using HW_2_4.Commands.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace PW_2_2.Commands
+namespace HW_2_4.Commands
 {
     internal class Update: Command
     {
-        public Update(List<ToDoItem> toDoItems) : base(toDoItems) =>
-            Name = "update";
+        public Update(IList<ToDoItem> toDoItems) : base(toDoItems) =>
+            (Name, RequiredNumber) = ("update", 2);
 
-        public override void Execute(string args)
+        public override void Execute(IList<string> args)
         {
+            base.Execute(args);
 
-            int id = int.Parse(args.Split(' ')[0]);
+            int index;
 
-            
+            if (int.TryParse(args[0], out index))
+            {
+                throw new ArgumentMismatchException()
+                {
+                    CommandName = Name,
+                    Index = 1,
+                    Argument = args[0],
+                    ArgumentType = typeof(int)
+                };
+            }
+
             string message, stringTime, repetition;
 
-            message = args.Split('"')[1];
-            args = args.Split('"')[2].Trim();
+            message = args[1];
 
-            ToDoItem item = ToDoItems.Find(el => el.ID == id);
+            ToDoItem item = ToDoItems.Find(el => el.ID == index);
             ToDoItems.Remove(item);
 
-            if (string.IsNullOrWhiteSpace(args))
+            if (args.Count == 2)
             {
-                ToDoItems.Add(new ToDoItem(id, message));
+                ToDoItems.Add(new ToDoItem(index, message));
                 return;
             }
 
-            stringTime = args.Split(' ')[0];
+            TimeOnly timeOnly;
 
-            if (args.Split(' ').Length == 1)
+            if (TimeOnly.TryParse(args[2], out timeOnly))
             {
-                ToDoItems.Add(new Reminder(id, message, TimeOnly.Parse(stringTime) ));
+                throw new ArgumentMismatchException()
+                {
+                    CommandName = Name,
+                    Index = 1,
+                    Argument = args[2],
+                    ArgumentType = typeof(TimeOnly)
+                };
+            }
+
+            if (args.Count == 3)
+            {
+                ToDoItems.Add(new Reminder(index, message, timeOnly));
                 return;
             }
-            repetition = args.Split(' ')[1];
 
-            ToDoItems.Add(new ReminderRC(id, message, TimeOnly.Parse(stringTime), repetition));
+            repetition = args[3];
+            ToDoItems.Add(new ReminderRC(index, message, timeOnly, repetition));
         }
     }
 }

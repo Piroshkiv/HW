@@ -3,21 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HW_2_4.Commands.Exceptions;
 
-namespace PW_2_2.Commands
+namespace HW_2_4.Commands
 {
     internal class AddItem : Command
     {
         public AddItem(List<ToDoItem> toDoItems): base(toDoItems) =>
-            Name = "add-item";
+            (Name, RequiredNumber) = ("add-item", 1);
         
-
-        public override void Execute(string args)
+        public override void Execute(IList<string> args)
         {
-            string message, stringTime;
-            message = args.Split('"')[1];
+            base.Execute(args);
 
-            ToDoItems.Add(new ToDoItem(ToDoItems.Count, args));
+            string message;
+            message = args[0];
+
+            ToDoItems.Add(new ToDoItem(ToDoItems.Count, message));
+
         }
     }
 }

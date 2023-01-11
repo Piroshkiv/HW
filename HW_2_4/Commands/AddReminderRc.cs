@@ -1,28 +1,42 @@
-﻿using System;
+﻿using HW_2_4.Commands.Exceptions;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PW_2_2.Commands
+namespace HW_2_4.Commands
 {
     internal class AddReminderRc: Command
     {
-        public AddReminderRc(List<ToDoItem> toDoItems) : base(toDoItems) =>
-            Name = "add-reminder-rc";
+        public AddReminderRc(IList<ToDoItem> toDoItems) : base(toDoItems) =>
+            (Name, RequiredNumber) = ("add-reminder-rc", 3);
 
-
-        public override void Execute(string args)
+        public override void Execute(IList<string> args)
         {
-            string message, stringTime,repetition;
+            base.Execute(args);
 
-            message = args.Split('"')[1];
-            args = args.Split('"')[2];
+            string message, repetition;
 
-            stringTime = args.Split(' ')[1];
-            repetition = args.Split(' ')[2];
+            message = args[0];
 
-            ToDoItems.Add(new ReminderRC(ToDoItems.Count, message, TimeOnly.Parse(stringTime),repetition));
+            TimeOnly timeOnly;
+
+            if (TimeOnly.TryParse(args[1], out timeOnly))
+            {
+                throw new ArgumentMismatchException()
+                {
+                    CommandName = Name,
+                    Index = 1,
+                    Argument = args[1],
+                    ArgumentType = typeof(TimeOnly)
+                };
+            }
+
+            repetition = args[2];
+
+            ToDoItems.Add(new ReminderRC(ToDoItems.Count, message, timeOnly ,repetition));
         }
     }
 }

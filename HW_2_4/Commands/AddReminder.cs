@@ -1,26 +1,39 @@
-﻿using System;
+﻿using HW_2_4.Commands.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PW_2_2.Commands
+namespace HW_2_4.Commands
 {
     internal class AddReminder: Command
     {
-        public AddReminder(List<ToDoItem> toDoItems) : base(toDoItems) =>
-            Name = "add-reminder";
+        public AddReminder(IList<ToDoItem> toDoItems) : base(toDoItems) =>
+            (Name, RequiredNumber) = ("add-reminder", 2);
 
-        public override void Execute(string args)
+
+        public override void Execute(IList<string> args)
         {
-            string message, stringTime;
+            base.Execute(args);
 
-            message = args.Split('"')[1];
-            args = args.Split('"')[2];
+            string message;
+            message = args[0];
 
-            stringTime = args.Split(' ')[1];
+            TimeOnly timeOnly;
 
-            ToDoItems.Add( new Reminder(ToDoItems.Count, message, TimeOnly.Parse(stringTime)));
+            if(TimeOnly.TryParse(args[1], out timeOnly))
+            {
+                throw new ArgumentMismatchException()
+                {
+                    CommandName = Name,
+                    Index = 1,
+                    Argument = args[1],
+                    ArgumentType = typeof(TimeOnly)
+                };
+            }
+
+            ToDoItems.Add( new Reminder(ToDoItems.Count, message, timeOnly));
         }
     }
 }
