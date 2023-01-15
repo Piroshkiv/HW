@@ -49,61 +49,37 @@ namespace HW_3_2
             }
         }
 
-        public IEnumerable<T> GetPreOrder()
+        public IEnumerable<T> Order(BinaryOrderType orderType)
         {
-            if (Left != null)
+            foreach (var returnOrder in BinaryOrderTypeHashtable.Value[orderType] )
             {
-                foreach (var item in Left.GetPreOrder())
+                switch (returnOrder)
                 {
-                    yield return item;
+                    case BinaryReturnOrder.left:
+                        if (Left != null)
+                        {
+                            foreach (var item in Left.Order(orderType))
+                            {
+                                yield return item;
+                            }
+                        }
+                        break;
+                    case BinaryReturnOrder.value:
+                        yield return Value;
+                        break;
+                    case BinaryReturnOrder.right:
+                        if (Right != null)
+                        {
+                            foreach (var item in Right.Order(orderType))
+                            {
+                                yield return item;
+                            }
+                        }
+                        break;
+                    default:
+                        break;
                 }
-            }
-            yield return Value;
-            if (Right != null)
-            {
-                foreach (var item in Right.GetPreOrder())
-                {
-                    yield return item;
-                }
-            }
-        }
-
-        public IEnumerable<T> GetPostOrder()
-        {
-            if (Right != null)
-            {
-                foreach (var item in Right.GetPreOrder())
-                {
-                    yield return item;
-                }
-            }
-            yield return Value;
-            if (Left != null)
-            {
-                foreach (var item in Left.GetPreOrder())
-                {
-                    yield return item;
-                }
-            }
-        }
-
-        public IEnumerable<T> GetInOrder()
-        {
-            yield return Value;
-            if (Left != null)
-            {
-                foreach (var item in Left.GetPreOrder())
-                {
-                    yield return item;
-                }
-            }
-            if (Right != null)
-            {
-                foreach (var item in Right.GetPreOrder())
-                {
-                    yield return item;
-                }
-            }
+            }  
         }
 
         public BinaryNode<T>? Remove(T item)

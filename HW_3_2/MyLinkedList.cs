@@ -83,7 +83,29 @@ namespace PW_3_1
 
         }
 
-        public void Delete(int index)
+        public T Find(T item)
+        {
+            foreach (var el in this)
+            {
+                if (el.Equals(item))
+                    return el;
+            }
+            throw new ArgumentOutOfRangeException();
+        }
+
+        public int IndexOf(T item)
+        {
+            int i = 0;
+            foreach (var el in this)
+            {
+                if (el.Equals(item))
+                    return i;
+                i++;
+            }
+            return -1;
+        }
+
+        public void DeleteAt(int index)
         {
             if(index == 0)
             {
@@ -99,6 +121,15 @@ namespace PW_3_1
                 LinkedNode<T> node = GetNode(index);
                 GetNode(index - 1).Next = node.Next;
             }
+        }
+
+        public bool Delete(T item)
+        {
+            int index = IndexOf(item);
+            if (index == -1)
+                return false;
+            DeleteAt(index);
+            return false;
         }
 
         private IEnumerable<LinkedNode<T>> GetNodes()

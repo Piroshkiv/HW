@@ -10,8 +10,8 @@ namespace HW_3_2
 {
     public class BinaryTree<T> : IEnumerable<T> where T : IComparable<T> 
     {
-        public IEnumerable<T> GetPreOrder { get => First?.GetPreOrder(); }
-        public IEnumerable<T> GetPostOrder { get => First?.GetPostOrder(); }
+        public IEnumerable<T> GetPreOrder { get => First?.Order(BinaryOrderType.PreOrder); }
+        public IEnumerable<T> GetPostOrder { get => First?.Order(BinaryOrderType.PreOrder); }
         private BinaryNode<T>? First { get; set; }
 
         public void Add(T item)
@@ -54,7 +54,7 @@ namespace HW_3_2
 
         public IEnumerator<T> GetEnumerator()
         {
-            foreach (var item in First.GetInOrder())
+            foreach (var item in First.Order(BinaryOrderType.InOrder))
             {
                 yield return item;
             }

@@ -4,11 +4,10 @@
     {
         static void Main(string[] args)
         {
-            List<int> list = new List<int>() { 10, 12, 13, 14 };
-
+            List<int> list = new() { 10, 12, 13, 14 };
             list.Add(12);
 
-            list.Remove(13);
+            list.RemoveAt(13);
 
             list[5] = 10;
 
@@ -27,7 +26,7 @@
             {
                 Console.Write(item + " ");
             }
-            
+
         }
     }
 }
