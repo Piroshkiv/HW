@@ -6,12 +6,25 @@ using System.Threading.Tasks;
 
 namespace HW_3_2
 {
-    public static class Extesions
+    public static class Extensions
     {
+
+        public static void CW<T>(this IEnumerable<T> src)
+        {
+            foreach (var item in src)
+            {
+                Console.Write(item + " ");
+            }
+            Console.WriteLine();
+        }
+
         public static void CW(this object item)
         {
             Console.WriteLine(item.ToString());
         }
+
+
+
 
     }
 }
