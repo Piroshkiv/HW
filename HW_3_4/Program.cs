@@ -116,7 +116,7 @@
             {
                 Name = e.Name,
                 BirhtDate = e.BirhtDate,
-                Namesakes = namesakes.Find(u => u.Key == e.Surname)
+                Namesakes = namesakes.First(u => u.Key == e.Surname)
                 .Where(u => u.ID != e.ID)
                 .OrderBy(u => u.BirhtDate)
                 .ToList()
