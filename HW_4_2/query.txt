@@ -1,0 +1,60 @@
+--1
+SELECT * FROM Sales.Customer
+
+GO
+
+--2
+SELECT * FROM Sales.Store
+ORDER BY Name
+
+GO
+
+--3
+SELECT TOP 10 * FROM HumanResources.Employee
+WHERE BirthDate > '1989-09-28'
+
+GO
+
+--4
+SELECT NationalIDNumber, LoginID, JobTitle FROM HumanResources.Employee
+WHERE LoginID Like '%0'
+Order BY JobTitle DESC
+
+GO
+
+--5
+SELECT * FROM  Person.Person
+WHERE Year(ModifiedDate) = 2008 AND MiddleName IS NOT NULL AND Title IS NULL
+
+GO
+
+--6
+SELECT DISTINCT d.Name 
+FROM  HumanResources.Department AS d INNER JOIN HumanResources.EmployeeDepartmentHistory AS h 
+ON d.DepartmentID = h.DepartmentID
+
+GO
+
+--7
+SELECT TerritoryID, SUM(CommissionPct) AS SumOFCommissionPct FROM Sales.SalesPerson
+GROUP BY TerritoryID
+HAVING SUM(CommissionPct) > 0
+
+GO
+
+--8
+SELECT * FROM HumanResources.Employee
+WHERE HumanResources.Employee.VacationHours = (SELECT MAX(HumanResources.Employee.VacationHours) FROM HumanResources.Employee)
+
+GO
+
+--9
+SELECT * FROM HumanResources.Employee
+WHERE HumanResources.Employee.JobTitle IN ('Sales Representative' , 'Network Administrator' , 'Network Manager')
+
+GO
+
+--10
+SELECT * FROM HumanResources.Employee e
+LEFT JOIN Purchasing.PurchaseOrderHeader h 
+ON e.BusinessEntityID = h.EmployeeID
