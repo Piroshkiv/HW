@@ -21,8 +21,7 @@ namespace HW_4_3
 
             using (EmployeeContext context = new EmployeeContext(projectConfig.ConnectionString))
             {
-                context.Titles.Add(new() { Name = "dsasda"});
-                context.SaveChanges();
+                _ = context.Clients.Count();
             }
             
         }
