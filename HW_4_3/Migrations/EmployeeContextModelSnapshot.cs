@@ -48,7 +48,7 @@ namespace HW_4_3.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Clients");
+                    b.ToTable("Clients", (string)null);
 
                     b.HasData(
                         new

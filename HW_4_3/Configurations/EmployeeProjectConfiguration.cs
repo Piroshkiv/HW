@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
+
 namespace HW_4_3.Configurations
 {
     public class EmployeeProjectConfiguration : IEntityTypeConfiguration<EmployeeProject>
@@ -17,6 +19,7 @@ namespace HW_4_3.Configurations
 
             builder.HasOne(e => e.Project).WithMany(t => t.EmployeeProjects)
                 .HasForeignKey(e => e.ProjectId).HasPrincipalKey(t => t.Id);
+
         }
     }
 }
