@@ -10,7 +10,7 @@ namespace HW_4_3.Configurations
             builder.Property(e => e.FirstName).IsRequired().HasMaxLength(50);
             builder.Property(e => e.LastName).IsRequired().HasMaxLength(50);
             builder.Property(e => e.HiredDate).IsRequired();
-            builder.Property(e => e.DateOfBirth).HasColumnType("date");
+            builder.Property(e => e.DateOfBirth).IsRequired(false).HasColumnType("date");
             builder.Property(e => e.OfficeId).IsRequired();
             builder.Property(e => e.TitleId).IsRequired();
 

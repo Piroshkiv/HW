@@ -1,6 +1,6 @@
-﻿using System;
+﻿ 
 using System.Collections;
-using System.Collections.Generic;
+ 
 using System.Linq;
 
 namespace HW_2_2
