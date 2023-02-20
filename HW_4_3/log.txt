@@ -1,0 +1,64 @@
+info: 2/20/2023 13:42:24.697 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure)
+      Entity Framework Core 6.0.0 initialized 'EmployeeContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.0' with options: None
+info: 2/20/2023 13:42:25.859 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
+      Executed DbCommand (106ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT [e].[EmployeeId], [t].[Name] AS [Title], [o].[Title] AS [Office]
+      FROM [Employee] AS [e]
+      LEFT JOIN [Title] AS [t] ON [e].[TitleId] = [t].[TitleId]
+      LEFT JOIN [Office] AS [o] ON [e].[OfficeId] = [o].[OfficeId]
+info: 2/20/2023 13:42:25.946 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure)
+      Entity Framework Core 6.0.0 initialized 'EmployeeContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.0' with options: None
+info: 2/20/2023 13:42:25.980 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
+      Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT [e].[HiredDate], CONVERT(date, GETDATE())
+      FROM [Employee] AS [e]
+info: 2/20/2023 13:42:26.033 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure)
+      Entity Framework Core 6.0.0 initialized 'EmployeeContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.0' with options: None
+info: 2/20/2023 13:42:26.167 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
+      Executed DbCommand (52ms) [Parameters=[@__8__locals1_ProjectId_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+      SELECT TOP(1) [p].[ProjectId], [p].[Budget], [p].[ClientId], [p].[Name], [p].[StartedDate]
+      FROM [Project] AS [p]
+      WHERE [p].[ProjectId] = @__8__locals1_ProjectId_0
+info: 2/20/2023 13:42:26.261 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure)
+      Entity Framework Core 6.0.0 initialized 'EmployeeContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.0' with options: None
+info: 2/20/2023 13:42:26.468 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
+      Executed DbCommand (2ms) [Parameters=[@p0='?' (Size = 100), @p1='?' (Size = 100)], CommandType='Text', CommandTimeout='30']
+      SET NOCOUNT ON;
+      INSERT INTO [Office] ([Location], [Title])
+      VALUES (@p0, @p1);
+      SELECT [OfficeId]
+      FROM [Office]
+      WHERE @@ROWCOUNT = 1 AND [OfficeId] = scope_identity();
+info: 2/20/2023 13:42:26.493 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
+      Executed DbCommand (2ms) [Parameters=[@p0='?' (Size = 50)], CommandType='Text', CommandTimeout='30']
+      SET NOCOUNT ON;
+      INSERT INTO [Title] ([Name])
+      VALUES (@p0);
+      SELECT [TitleId]
+      FROM [Title]
+      WHERE @@ROWCOUNT = 1 AND [TitleId] = scope_identity();
+info: 2/20/2023 13:42:26.498 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
+      Executed DbCommand (3ms) [Parameters=[@p1='?' (DbType = Date), @p2='?' (Size = 50), @p3='?' (DbType = DateTime2), @p4='?' (Size = 50), @p5='?' (DbType = Int32), @p6='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+      SET NOCOUNT ON;
+      INSERT INTO [Employee] ([DateOfBirth], [FirstName], [HiredDate], [LastName], [OfficeId], [TitleId])
+      VALUES (@p1, @p2, @p3, @p4, @p5, @p6);
+      SELECT [EmployeeId]
+      FROM [Employee]
+      WHERE @@ROWCOUNT = 1 AND [EmployeeId] = scope_identity();
+info: 2/20/2023 13:42:26.520 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure)
+      Entity Framework Core 6.0.0 initialized 'EmployeeContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.0' with options: None
+info: 2/20/2023 13:42:26.587 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
+      Executed DbCommand (53ms) [Parameters=[@p0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+      SET NOCOUNT ON;
+      DELETE FROM [Employee]
+      WHERE [EmployeeId] = @p0;
+      SELECT @@ROWCOUNT;
+info: 2/20/2023 13:42:26.597 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure)
+      Entity Framework Core 6.0.0 initialized 'EmployeeContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.0' with options: None
+info: 2/20/2023 13:42:26.805 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
+      Executed DbCommand (56ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT [t].[Name] AS [key], COUNT(*) AS [count]
+      FROM [Employee] AS [e]
+      INNER JOIN [Title] AS [t] ON [e].[TitleId] = [t].[TitleId]
+      GROUP BY [t].[Name]
+      HAVING NOT ([t].[Name] LIKE N'%a%')

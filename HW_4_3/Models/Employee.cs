@@ -10,8 +10,8 @@
         public int OfficeId { get; set; }
         public int TitleId { get; set; }
 
-        public Office Office { get; set; }
-        public Title Title { get; set; }
-        public List<EmployeeProject> EmployeeProjects { get; set; }
+        public virtual Office Office { get; set; }
+        public virtual Title Title { get; set; }
+        public virtual List<EmployeeProject> EmployeeProjects { get; set; }
     }
 }
