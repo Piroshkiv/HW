@@ -69,7 +69,11 @@ namespace HW_4_3
             using EmployeeContext db = new EmployeeContext(_config.ConnectionString);
             db.ChangeTracker.AutoDetectChangesEnabled = false;
 
+<<<<<<< HEAD
             _ = db.Employees.Select(e => EF.Functions.DateDiffDay(e.HiredDate, DateTime.Today) ).ToList();
+=======
+            _ = db.Employees.Select(e => e.HiredDate - DateTime.Today).ToList();
+>>>>>>> 779aaf1660530c918a3a7b9dc90387661cbbc674
             
         }
         static void BudgetIncrease(int ProjectId, decimal increase)
