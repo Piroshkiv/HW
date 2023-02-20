@@ -16,7 +16,7 @@
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(_connectionString);
+            optionsBuilder.LogTo(s => Console.WriteLine(s), Microsoft.Extensions.Logging.LogLevel.Information ).UseSqlServer(_connectionString);
         }
             
             
@@ -27,6 +27,8 @@
             modelBuilder.ApplyConfiguration(new OfficeConfiguretion());
             modelBuilder.ApplyConfiguration(new ProjectConfiguretion());
             modelBuilder.ApplyConfiguration(new TitleConfiguretion());
+
+            
         }
     }
 }
