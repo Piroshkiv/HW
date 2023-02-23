@@ -1,0 +1,59 @@
+Query task 1:
+
+info: 2/23/2023 13:08:37.853 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure)
+      Entity Framework Core 6.0.0 initialized 'SongContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.0' with options: None
+info: 2/23/2023 13:08:40.333 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
+      Executed DbCommand (1,054ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT [s].[Title], [s].[Id], [g].[Id], [t].[Name], [t].[ArtistId], [t].[SongId], [t].[Id], [g].[Title]
+      FROM [Song] AS [s]
+      INNER JOIN [Genre] AS [g] ON [s].[GenreId] = [g].[Id]
+      LEFT JOIN (
+          SELECT [a2].[Name], [a1].[ArtistId], [a1].[SongId], [a2].[Id]
+          FROM [ArtistSong] AS [a1]
+          INNER JOIN [Artist] AS [a2] ON [a1].[SongId] = [a2].[Id]
+      ) AS [t] ON [s].[Id] = [t].[ArtistId]
+      WHERE EXISTS (
+          SELECT 1
+          FROM [ArtistSong] AS [a]
+          INNER JOIN [Artist] AS [a0] ON [a].[SongId] = [a0].[Id]
+          WHERE ([s].[Id] = [a].[ArtistId]) AND [a0].[DateOfDeath] IS NOT NULL)
+      ORDER BY [s].[Id], [g].[Id], [t].[ArtistId], [t].[SongId]
+
+Title4 Metal Name2 Name4
+
+End query task 1
+
+Query task 2:
+
+info: 2/23/2023 13:08:40.394 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure)
+      Entity Framework Core 6.0.0 initialized 'SongContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.0' with options: None
+info: 2/23/2023 13:08:44.619 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
+      Executed DbCommand (161ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT [g].[Title] AS [Name], (
+          SELECT COUNT(*)
+          FROM [Song] AS [s]
+          WHERE [g].[Id] = [s].[GenreId]) AS [Count]
+      FROM [Genre] AS [g]
+
+Rock 1
+Metal 1
+Rap 0
+Chanson 0
+Classical 1
+
+End query task 2
+
+Query task 3:
+
+info: 2/23/2023 13:10:03.028 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure)
+      Entity Framework Core 6.0.0 initialized 'SongContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.0' with options: None
+info: 2/23/2023 13:10:03.486 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command)
+      Executed DbCommand (423ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT [s].[Id], [s].[Duration], [s].[GenreId], [s].[ReleasedDate], [s].[Title]
+      FROM [Song] AS [s]
+      WHERE [s].[ReleasedDate] < (
+          SELECT MAX([a].[DateOfBirth])
+          FROM [Artist] AS [a])
+
+
+End query task 3
